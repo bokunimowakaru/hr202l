@@ -3,8 +3,8 @@
 利用、編集、再配布等が自由に行えますが、著作権表示の改変は禁止します。
 いかなる被害が発生したとしても当方は一切の責任を負いません。
 
-温湿度センサ AOSONG HR202L の値を読み取る
-＋UDPでブロードキャスト送信する
+温湿度センサASONG HR202Lの値を読み取る
+＃IoTセンサ用クラウドサービスAmbient送信する
 
 回路図などの情報：
 https://bokunimo.net/blog/misc/701/
@@ -16,8 +16,8 @@ https://github.com/bokunimowakaru/hr202l/
                                https://bokunimo.net/
 *********************************************************************/
 #include <WiFi.h>                           // ESP32用WiFiライブラリ
-#include <WiFiUdp.h>                        // UDP通信を行うライブラリ
 #include "esp_sleep.h"                      // ESP32用Deep Sleep ライブラリ
+#include "Ambient.h"
 
 #define PIN_EN 2                            // 動作確認用LED
 #define PIN_HR202_A1  32                    // ASONG HR202L用
@@ -26,10 +26,12 @@ https://github.com/bokunimowakaru/hr202l/
 
 #define SSID "1234ABCD"                     // 無線LANアクセスポイントのSSID
 #define PASS "password"                     // パスワード
-#define SENDTO "255.255.255.255"            // 送信先のIPアドレス
-#define PORT 1024                           // 送信のポート番号
+#define Ambient_channelId 100               // AmbientのチャネルID 
+#define Ambient_writeKey "0123456789abcdef" // Ambientのライトキー 
 #define SLEEP_P 30*1000000ul                // スリープ時間 30秒(uint32_t)
-#define DEVICE "humid_1,"                   // デバイス名(5文字+"_"+番号+",")
+
+WiFiClient client;
+Ambient ambient;
 
 void setup(){                               // 起動時に一度だけ実行する関数
     int waiting=0;                          // アクセスポイント接続待ち用
@@ -48,6 +50,7 @@ void setup(){                               // 起動時に一度だけ実行す
         if(waiting > 300) sleep();          // 300回(30秒)を過ぎたらスリープ
     }
     Serial.println(WiFi.localIP());         // 本機のIPアドレスをシリアル出力
+    ambient.begin(Ambient_channelId, Ambient_writeKey, &client);
 }
 
 void loop(){
@@ -57,15 +60,12 @@ void loop(){
     temp=hr202_getTemp();                   // 温度を取得して変数tempに代入
     hum =hr202_getHum();                    // 湿度を取得して変数humに代入
     if( temp>-100. && hum>=0.){             // 適切な値の時
-        udp.beginPacket(SENDTO, PORT);      // UDP送信先を設定
-        udp.print(DEVICE);                  // デバイス名を送信
-        udp.print(temp,1);                  // 変数tempの値を送信
+        ambient.set(1,String(temp).c_str());// 変数tempの値をAmbientへ送信
         Serial.print(temp,2);               // シリアル出力表示
-        udp.print(", ");                    // 「,」カンマを送信
         Serial.print(", ");                 // シリアル出力表示
-        udp.println(hum,1);                 // 変数humの値を送信
+        ambient.set(2,String(hum).c_str()); // 変数humの値をAmbientへ送信
         Serial.println(hum,2);              // シリアル出力表示
-        udp.endPacket();                    // UDP送信の終了(実際に送信する)
+        ambient.send();                     // 送信の終了(実際に送信する)
     }
     sleep();
 }
