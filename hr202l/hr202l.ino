@@ -27,6 +27,10 @@ uint8_t _hr202_PIN_A1  = 32;   // IO32に抵抗10kを接続。HR202Lを直列に
 uint8_t _hr202_PIN_A2  = 33;   // HR202Lの反対側の端子を接続
 uint8_t _hr202_PIN_AIN = 34;   // 抵抗とHR202Lの接続点を入力
 
+float hr202_getTemp(){
+    return temperatureRead() - (float)TEMP_ADJ;
+}
+
 uint16_t hr202_getVal(){  // 12bit + 4bit(16倍) = 16bit
     uint16_t val=0;
     uint32_t tus0,tus1,tus2,tus3,tus4;
@@ -59,7 +63,7 @@ float hr202_getHum(){
     float imp = 33. / volt -10.;
     float i = 10 * log10f( imp );
     float hum0 = -5.897e-4 * powf(i,3) + 6.716e-2 * powf(i,2) - 4.019 * i + 1.187e2;
-    float hum = hum0 - (temperatureRead() - (float)TEMP_ADJ) / 2.15 +(float)HUMI_ADJ;
+    float hum = hum0 - hr202_getTemp() / 2.15 +(float)HUMI_ADJ;
 //  Serial.printf("HR202L volt=%.1f[V], imp=%.1f[kOhm], ",volt,imp);
 //  Serial.printf("log=%.1f[dBkOhm], hum0=%.1f[%%], hum=%.1f[%%]\n",2*imp,hum0,hum);
     return hum;
@@ -88,7 +92,7 @@ void setup(){
 }
 
 void loop(){
-    float temp = temperatureRead() - (float)TEMP_ADJ;
+    float temp = hr202_getTemp();
     float hum = hr202_getHum();
     Serial.print("Temp = ");
     Serial.print(temp,1);
