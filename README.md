@@ -10,7 +10,7 @@ However, it is a little difficult to handle, so giving up accuracy makes it easy
 
 ![schematics](https://bokunimo.net/blog/wp-content/uploads/2019/12/DSC_0075.jpg)  
 
-    ブログ記事（Japanese Only）：  
+- ブログ記事（Japanese Only）：  
     [https://bokunimo.net/blog/misc/701/](https://bokunimo.net/blog/misc/701/)  
 
 by [bokunimo.net](https://bokunimo.net)
