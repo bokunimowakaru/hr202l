@@ -9,12 +9,19 @@ ASONG HR202L
 回路図などの情報：
 https://bokunimo.net/blog/misc/701/
 
+GitHub(Schematics):
+https://github.com/bokunimowakaru/hr202l/
+
                                Copyright (c) 2019 Wataru KUNINO
-                               https://bokunimo.net/bokunimowakaru/
+                               https://bokunimo.net/
 *********************************************************************/
 
 #define TEMP_ADJ 33            // 内蔵温度センサの値 オフセット
-#define HUMI_ADJ 8             // 湿度センサの値 オフセット
+#define HUMI_ADJ 4             // 湿度センサの値 オフセット(0～8程度)
+
+#define AC_T1 250 -3 +23       // AC波形用 OFF期間
+#define AC_T2 250 -3 -23       // AC波形用 ON期間
+#define AC_T3 250 -13 -23      // AC波形用 ON期間 - ADC期間
 
 uint8_t _hr202_PIN_A1  = 32;   // IO32に抵抗10kを接続。HR202Lを直列に
 uint8_t _hr202_PIN_A2  = 33;   // HR202Lの反対側の端子を接続
@@ -22,22 +29,21 @@ uint8_t _hr202_PIN_AIN = 34;   // 抵抗とHR202Lの接続点を入力
 
 uint16_t hr202_getVal(){  // 12bit + 4bit(16倍) = 16bit
     uint16_t val=0;
-    uint32_t t1,t2;
-    uint32_t tus,tus0,tus1,tus2,tus3,tus4;
+    uint32_t tus0,tus1,tus2,tus3,tus4;
     
     tus0 = micros();
     for(int t=0;t<16;t++){
-        delayMicroseconds(247);
+        delayMicroseconds(AC_T1);
         digitalWrite(_hr202_PIN_A2,LOW);
         tus1 = micros() - tus0;        
-        delayMicroseconds(247);
+        delayMicroseconds(AC_T2);
         digitalWrite(_hr202_PIN_A1,LOW);
         tus2 = micros() - tus0;        
-        delayMicroseconds(247);
+        delayMicroseconds(AC_T1);
         digitalWrite(_hr202_PIN_A2,HIGH);
         tus3 = micros() - tus0;
         val += analogRead(_hr202_PIN_AIN);
-        delayMicroseconds(237);
+        delayMicroseconds(AC_T3);
         digitalWrite(_hr202_PIN_A1,HIGH);
         tus4 = micros() - tus0;
         tus0 = micros();
@@ -54,8 +60,8 @@ float hr202_getHum(){
     float i = 10 * log10f( imp );
     float hum0 = -5.897e-4 * powf(i,3) + 6.716e-2 * powf(i,2) - 4.019 * i + 1.187e2;
     float hum = hum0 - (temperatureRead() - (float)TEMP_ADJ) / 2.15 +(float)HUMI_ADJ;
-    Serial.printf("HR202L volt=%.1f[V], imp=%.1f[kOhm], ",volt,imp);
-    Serial.printf("log=%.1f[dBkOhm], hum0=%.1f[%%], hum=%.1f[%%]\n",2*imp,hum0,hum);
+//  Serial.printf("HR202L volt=%.1f[V], imp=%.1f[kOhm], ",volt,imp);
+//  Serial.printf("log=%.1f[dBkOhm], hum0=%.1f[%%], hum=%.1f[%%]\n",2*imp,hum0,hum);
     return hum;
 }
 
