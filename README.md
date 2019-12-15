@@ -3,9 +3,8 @@ Example code for AOSONG HR202L on ESP32 Arduino.
 
 Connect humidity sensor AOSONG HR202L to ESP32, it measures temperature and humidity.  
 
-AOSONG HR202L is a very inexpensive humidity sensor that can be purchased from $ 0.60
-to $ 2 yen. However, it is a little difficult to handle, so giving up accuracy makes
-it easy to measure.  
+AOSONG HR202L is a very inexpensive humidity sensor. We can buy it for $ 0.60 to $ 2. 
+However, it is a little difficult to handle, so giving up accuracy makes it easy to measure.  
 
 ![AOSONG HR202L](https://bokunimo.net/blog/wp-content/uploads/2019/12/DSC_0077.jpg)  
 
