@@ -15,7 +15,7 @@ Arduino IDEで ht202l_toAmbient.ino を開き、下記の項目を修正し、ES
 	#define Ambient_channelId "0123456789abcdef" // Ambientのライトキー 
 
 ## ESP用 Ambient ライブラリについて
-本フォルダに含まれる以下のファイルの権利はアンビエントデーター株式会社に帰属します。  
+本フォルダに含まれる以下のファイルは、アンビエントデーター株式会社が作成したものを当方がダウンロードしたものです。これらのファイルの権利はアンビエントデーター株式会社に帰属します。  
 詳細は[README_Ambient.md](README_Ambient.md)をご覧ください。
 
 - Ambient.cpp
