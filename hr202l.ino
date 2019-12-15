@@ -65,10 +65,7 @@ float hr202_getHum(){
     return hum;
 }
 
-void hr202_Setup(uint8_t PIN_A1, uint8_t PIN_A2, uint8_t PIN_AIN){
-    _hr202_PIN_A1=PIN_A1;
-    _hr202_PIN_A2=PIN_A2;
-    _hr202_PIN_AIN=PIN_AIN;
+void hr202_Setup(){
     pinMode(_hr202_PIN_A1,OUTPUT);
     pinMode(_hr202_PIN_A2,OUTPUT);
     digitalWrite(_hr202_PIN_A1,HIGH);
@@ -78,9 +75,16 @@ void hr202_Setup(uint8_t PIN_A1, uint8_t PIN_A2, uint8_t PIN_AIN){
     for(int t=0;t<10;t++) delay(1);
 }
 
+void hr202_Setup(uint8_t PIN_A1, uint8_t PIN_A2, uint8_t PIN_AIN){
+    _hr202_PIN_A1=PIN_A1;
+    _hr202_PIN_A2=PIN_A2;
+    _hr202_PIN_AIN=PIN_AIN;
+    hr202_Setup();
+}
+
 void setup(){
     Serial.begin(115200);
-    hr202_Setup(32,33,34);
+    hr202_Setup();
 }
 
 void loop(){
