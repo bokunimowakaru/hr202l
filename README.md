@@ -11,7 +11,7 @@ it easy to measure.
 
 ![schematics](https://bokunimo.net/blog/wp-content/uploads/2019/12/DSC_0075.jpg)  
 
-    ブログ記事(Japanese Only)：  
-    https://bokunimo.net/blog/misc/701/  
+    ブログ記事（Japanese Only）：  
+    [https://bokunimo.net/blog/misc/701/](https://bokunimo.net/blog/misc/701/)  
 
-by bokunimo.net(https://bokunimo.net)
+by [bokunimo.net](https://bokunimo.net)
