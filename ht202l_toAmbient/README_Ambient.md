@@ -1,3 +1,21 @@
+# ESP用 Ambient ライブラリについて
+
+本フォルダに含まれる以下のファイルは、アンビエントデーター株式会社が作成したものを当方がダウンロードしたものです。これらのファイルの権利はアンビエントデーター株式会社に帰属します。  
+詳細は[README_Ambient.md](README_Ambient.md)をご覧ください。
+
+- Ambient.cpp
+	- ambient.cpp - Library for sending data to Ambient
+	- Created by Takehiko Shimojima, April 21, 2016
+- Ambient.h
+	- ambient.h - Library for sending data to Ambient
+	- Created by Takehiko Shimojima, April 21, 2016
+
+- README_Ambient.md
+	- https://github.com/AmbientDataInc/Ambient_ESP8266_lib
+	- Created by Takehiko Shimojima, modified on 29 Apr 2018
+
+--------------------------------------------------------------------------------
+
 # ESP8266/ESP32用Arduino・Ambientライブラリー
 
 [Ambient](https://ambidata.io)はIoTデーターの可視化サービスです。 マイコンから送られたデーターを受信し、蓄積し、可視化(グラフ化)します。
