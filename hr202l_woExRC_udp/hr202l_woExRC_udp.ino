@@ -35,7 +35,7 @@ Schematics: Connect each of HR202L pins to the ESP32 GPIO 32 and 33.
 #define PORT 1024                           // 送信のポート番号
 #define SLEEP_P 30*1000000ul                // スリープ時間 30秒(uint32_t)
 #define DEVICE "humid_1,"                   // デバイス名(5文字+"_"+番号+",")
-#define TEMP_ADJ -15.0                      // 温度値の補正用
+#define TEMP_ADJ -33.0                      // 温度値の補正用
 
 void setup(){                               // 起動時に一度だけ実行する関数
     int waiting=0;                          // アクセスポイント接続待ち用

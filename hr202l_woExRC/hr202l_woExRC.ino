@@ -94,37 +94,32 @@ float hr202_getTemp(){
 }
 
 float hr202_getHum(){
-    int avn = 0;
     float hum_avr = 0.;
     for(int i=0; i < 8; i++){
         float temp = hr202_getTemp();
         int hr202_val =(int)hr202_getVal(39);   // センサ値を取得
         float hum;
-        if(hr202_val <= 0 || hr202_val >= 65500){
-            hum = - (10. - temp / 2.15);
+        if(hr202_val <= 0){
+            hum = 100.0 - (10. - temp / 2.15);
+        }else if(hr202_val >= 4095 * 16){
+            hum = 0.0 - (10. - temp / 2.15);
         }else if(hr202_val < 4096){
             hum = -2.999442e-3 * hr202_val + 83.0;
-            avn++;
         }else if(hr202_val < 5495){
             hum = -2.972147e-3 * hr202_val + 75.0;
-            avn++;
         }else if(hr202_val < 19152){
             hum = -4.241396e-4 * hr202_val + 61.0;
-            avn++;
         }else{
             hum = -1.525879e-4 * hr202_val + 55.8;
-            avn++;
         }
         /* 温度依存性の補正 */
         hum += 10. - temp / 2.15;
         hum_avr += hum;
         delay(1);
-    //  Serial.printf("%d, %d, %f, (%f)\n",i,hr202_val,hum,hum_avr /(float)avn);
+    //  Serial.printf("%d, %d, %f, (%f)\n",i,hr202_val,hum,hum_avr /(float)(i + 1));
     }
-    if(avn > 0) return hum_avr / avn;
-    return 0.0;
+    return hum_avr / 8.0;
 }
-
 
 void hr202_Setup(uint8_t PIN_A1, uint8_t PIN_A2){
     _hr202_PIN_A1=PIN_A1;
