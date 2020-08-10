@@ -10,12 +10,16 @@ However, it is a little difficult to handle, so giving up accuracy makes it easy
 ![AOSONG HR202L](pict/DSC_0077.jpg)  
 
 ## Schematics
+2 types:  
 
-### Schematic 1 for hr202l.ino, hr202l_udp.ino, ht202l_toAmbient.ino
+### Schematic 1: for hr202l.ino, hr202l_udp.ino, ht202l_toAmbient.ino
 ![schematics](pict/DSC_0075.jpg)  
+It has a reference resistor (10k Ohm) on the mini breadboard.
 
-### Schematic 2 for hr202l_woExRC.ino, hr202l_woExRC_udp.ino
+### Schematic 2: NO External components, for hr202l_woExRC.ino, hr202l_woExRC_udp.ino
 ![schematics](pict/Page0004.jpg)  
+
+Attention! NO adequate accuracy  
 
 ## Measured data on Ambient IoT Cloud Service (https://ambidata.io/)
 ![schematics](pict/ambient.jpg)  
@@ -27,4 +31,4 @@ The example code is in [ht202l_toAmbient](ht202l_toAmbient) folder
 - ESP32に直結・ブログ記事（Japanese Only）：  
     [https://bokunimo.net/blog/esp/903/](https://bokunimo.net/blog/esp/903/)  
 
-## Copyright (c) 2019 [Wataru KUNINO @ bokunimo.net](https://bokunimo.net)
+## Copyright (c) 2019-2020 [Wataru KUNINO @ bokunimo.net](https://bokunimo.net)
