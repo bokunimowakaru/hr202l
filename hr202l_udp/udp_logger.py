@@ -11,7 +11,7 @@ buf_n= 128                                              # 受信バッファ容�
 argc = len(sys.argv)                                    # 引数の数をargcへ代入
 print('UDP Logger (usage: '+sys.argv[0]+' port)')       # タイトル表示
 if argc >= 2:                                           # 入力パラメータ数の確認
-    port = sys.argv[1]                                  # ポート番号を設定
+    port = int(sys.argv[1])                             # ポート番号を設定
     if port < 1 or port > 65535:                        # ポート1未満or65535超の時
         port = 1024                                     # UDPポート番号を1024に
 else:
@@ -26,7 +26,11 @@ except Exception as e:                                  # 例外処理発生時
     exit()                                              # プログラムの終了
 while sock:                                             # 永遠に繰り返す
     udp, udp_from = sock.recvfrom(buf_n)                # UDPパケットを取得
-    udp = udp.decode()                                  # UDPデータを文字列に変換
+    try:
+        udp = udp.decode()                              # UDPデータを文字列に変換
+    except Exception as e:                              # 例外処理発生時
+        print(e)                                        # エラー内容を表示
+        continue                                        # whileの先頭に戻る
     s=''                                                # 表示用の文字列変数s
     for c in udp:                                       # UDPパケット内
         if ord(c) >= ord(' ') and ord(c) <= ord('~'):   # 表示可能文字
